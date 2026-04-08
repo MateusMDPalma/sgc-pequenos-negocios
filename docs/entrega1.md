@@ -50,4 +50,4 @@ O banco será composto pelas tabelas usuarios, clientes, produtos, vendas e iten
 O script SQL está disponível na pasta `/sql`.
 
 ## 10. Repositório GitHub
-Inserir aqui o link do repositório.
+[Inserir aqui o link do repositório.](https://github.com/MateusMDPalma/sgc-pequenos-negocios)
