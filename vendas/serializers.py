@@ -1,10 +1,12 @@
 from rest_framework import serializers
 from .models import Venda, ItemVenda
 
+
 class ItemVendaSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemVenda
         fields = ['produto', 'quantidade', 'preco_unitario', 'subtotal']
+        read_only_fields = ['preco_unitario', 'subtotal']
 
 
 class VendaSerializer(serializers.ModelSerializer):
@@ -13,15 +15,22 @@ class VendaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Venda
         fields = ['id', 'data', 'cliente', 'usuario', 'valor_total', 'itens']
-        read_only_fields = ['valor_total', 'data']
+        read_only_fields = ['valor_total', 'data', 'usuario']
 
     def create(self, validated_data):
+        request = self.context['request']
+        usuario = request.user
+
         itens_data = validated_data.pop('itens')
 
         if not itens_data:
             raise serializers.ValidationError("A venda deve ter pelo menos um item.")
 
-        venda = Venda.objects.create(**validated_data, valor_total=0)
+        venda = Venda.objects.create(
+            usuario=usuario,
+            valor_total=0,
+            **validated_data
+        )
 
         valor_total = 0
 
@@ -30,11 +39,11 @@ class VendaSerializer(serializers.ModelSerializer):
             quantidade = item_data['quantidade']
 
             if quantidade <= 0:
-                raise serializers.ValidationError("A quantidade do item deve ser maior que zero.")
+                raise serializers.ValidationError("Quantidade deve ser maior que zero.")
 
             if produto.quantidade_estoque < quantidade:
                 raise serializers.ValidationError(
-                    f"Estoque insuficiente para o produto {produto.nome}."
+                    f"Estoque insuficiente para {produto.nome}"
                 )
 
             preco_unitario = produto.preco

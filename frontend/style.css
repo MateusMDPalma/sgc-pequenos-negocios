@@ -1,0 +1,47 @@
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
+}
+
+.sidebar{
+    width:200px;
+    height:100vh;
+    background:#1e293b;
+    padding:20px;
+    float:left;
+}
+
+.sidebar button{
+    width:100%;
+    margin:10px 0;
+    padding:10px;
+    background:#38bdf8;
+    border:none;
+    color:white;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+.container{
+    margin-left:220px;
+    padding:20px;
+}
+
+/* 🔥 ISSO RESOLVE SEU PROBLEMA */
+.page{
+    display:none;
+}
+
+input, select{
+    display:block;
+    width:300px;
+    padding:10px;
+    margin:10px 0;
+}
+
+button{
+    padding:10px;
+    cursor:pointer;
+}

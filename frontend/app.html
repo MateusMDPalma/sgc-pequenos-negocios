@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>SGC</h2>
+    <button onclick="mostrar('clientes')">Clientes</button>
+    <button onclick="mostrar('produtos')">Produtos</button>
+    <button onclick="mostrar('vendas')">Vendas</button>
+</div>
+
+<div class="container">
+
+    <!-- CLIENTES -->
+    <div id="clientes" class="page">
+        <h2>Clientes</h2>
+
+        <input id="nome" placeholder="Nome">
+        <input id="cpf" placeholder="CPF">
+        <input id="email" placeholder="Email">
+
+        <button onclick="criarCliente()">Salvar</button>
+
+        <ul id="listaClientes"></ul>
+    </div>
+
+    <!-- PRODUTOS -->
+    <div id="produtos" class="page">
+        <h2>Produtos</h2>
+
+        <input id="nomeProduto" placeholder="Nome">
+        <input id="preco" placeholder="Preço">
+        <input id="estoque" placeholder="Estoque">
+
+        <button onclick="criarProduto()">Salvar</button>
+
+        <ul id="listaProdutos"></ul>
+    </div>
+
+    <!-- VENDAS -->
+    <div id="vendas" class="page">
+        <h2>Nova Venda</h2>
+
+        <select id="clienteSelect"></select>
+        <select id="produtoSelect"></select>
+
+        <input id="quantidade" placeholder="Quantidade">
+
+        <button onclick="adicionarItem()">Adicionar Produto</button>
+
+        <h3>Carrinho</h3>
+        <ul id="carrinho"></ul>
+
+        <button onclick="criarVenda()">Finalizar Venda</button>
+
+        <hr>
+
+        <h3>Histórico de Vendas</h3>
+        <ul id="listaVendas"></ul>
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+
+<script>
+function mostrar(secao){
+
+    document.querySelectorAll(".page").forEach(p => p.style.display = "none");
+    document.getElementById(secao).style.display = "block";
+
+    if(secao === "clientes") carregarClientes();
+    if(secao === "produtos") carregarProdutos();
+    if(secao === "vendas"){
+        carregarClientes();
+        carregarProdutos();
+        carregarVendas();
+    }
+}
+
+window.onload = function(){
+    mostrar("clientes");
+}
+</script>
+
+</body>
+</html>
